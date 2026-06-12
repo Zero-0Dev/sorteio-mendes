@@ -30,6 +30,7 @@ const screens = {
     suspense: document.getElementById('suspense-screen'),
     draw: document.getElementById('draw-screen'),
     gol: document.getElementById('gol-screen'),
+    prizeReveal: document.getElementById('prize-reveal-screen'),
     winner: document.getElementById('winner-screen')
 };
 
@@ -44,6 +45,7 @@ const btnSortear = document.getElementById('btn-sortear');
 const btnNovoSorteio = document.getElementById('btn-novo-sorteio');
 const btnHistorico = document.getElementById('btn-historico');
 const btnConfig = document.getElementById('btn-config');
+const btnFullscreen = document.getElementById('btn-fullscreen');
 const historyModal = document.getElementById('history-modal');
 const configModal = document.getElementById('config-modal');
 const btnCloseHistory = document.getElementById('close-history');
@@ -59,6 +61,9 @@ function init() {
     atualizarContador();
     btnSortear.addEventListener('click', iniciarSorteio);
     btnNovoSorteio.addEventListener('click', resetParaHome);
+    
+    // Fullscreen
+    btnFullscreen.addEventListener('click', toggleFullScreen);
     
     // Config Modal
     btnConfig.addEventListener('click', abrirModalConfig);
@@ -78,6 +83,18 @@ function abrirModalConfig() {
     // Preenche a textarea com a lista atual
     participantsInput.value = participantes.join('\n');
     configModal.classList.add('active');
+}
+
+function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Erro ao tentar modo tela cheia: ${err.message}`);
+        });
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
 }
 
 function salvarParticipantes() {
@@ -184,8 +201,17 @@ function exibirGol() {
     
     // O "GOOOOOOL" fica na tela por um curto período (surpresa)
     setTimeout(() => {
-        escolherVencedor();
+        exibirPremioAntesDoVencedor();
     }, 1500); // 1.5 segundos
+}
+
+function exibirPremioAntesDoVencedor() {
+    mudarTela(screens.prizeReveal);
+    
+    // Mostra o prêmio em destaque por 2.5s antes de revelar o nome do ganhador
+    setTimeout(() => {
+        escolherVencedor();
+    }, 2500);
 }
 
 function escolherVencedor() {

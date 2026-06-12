@@ -37,6 +37,11 @@
         <div class="footer-text">
             <p>Juntos, dentro e fora de campo, fazemos a diferença!</p>
         </div>
+
+        <!-- Prêmio Lateral -->
+        <div class="prize-side-container">
+            <img src="assets/imagens/premio.jpg" alt="Prêmio" class="prize-side-img">
+        </div>
     </section>
 
     <!-- Tela de Suspense (3..2..1) -->
@@ -58,6 +63,12 @@
         <h1 class="gol-text shake-animation">GOOOOOOL!</h1>
     </section>
 
+    <!-- Tela de Revelação do Prêmio (Antes do Vencedor) -->
+    <section id="prize-reveal-screen" class="screen hidden">
+        <h2 class="pre-reveal-text">O PRÊMIO É...</h2>
+        <img src="assets/imagens/premio.jpg" alt="Camiseta do Brasil" class="reveal-prize-img">
+    </section>
+
     <!-- Tela do Vencedor -->
     <section id="winner-screen" class="screen hidden">
         <canvas id="confetti-canvas"></canvas>
@@ -72,6 +83,7 @@
 
     <!-- Painel de Controle (Fixo ou Modal) -->
     <div id="control-panel">
+        <button id="btn-fullscreen" class="btn-icon-only" title="Tela Cheia">⛶</button>
         <button id="btn-config" class="btn-small">⚙️ Participantes</button>
         <button id="btn-historico" class="btn-small">Ver Histórico</button>
     </div>
