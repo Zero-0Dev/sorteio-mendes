@@ -1,13 +1,3 @@
-/* 
-  Sorteio Mendes Holler - Lógica Principal 
-  Sem áudios para manter o código limpo e simples.
-*/
-
-// ==========================================
-// CONFIGURAÇÕES GERAIS
-// ==========================================
-
-// Lista inicial de participantes (Padrão ou carregada do LocalStorage)
 let defaultParticipantes = [
     "João Silva",
     "Maria Oliveira",
@@ -24,7 +14,6 @@ let defaultParticipantes = [
 let participantes = JSON.parse(localStorage.getItem('mendes_participantes')) || [...defaultParticipantes];
 let vencedoresHistory = JSON.parse(localStorage.getItem('mendes_historico')) || [];
 
-// Elementos da Interface
 const screens = {
     home: document.getElementById('home-screen'),
     suspense: document.getElementById('suspense-screen'),
@@ -40,7 +29,6 @@ const elRouletteNames = document.getElementById('roulette-names');
 const elWinnerName = document.getElementById('winner-name');
 const elHistoryList = document.getElementById('history-list');
 
-// Botões e Modais
 const btnSortear = document.getElementById('btn-sortear');
 const btnNovoSorteio = document.getElementById('btn-novo-sorteio');
 const btnHistorico = document.getElementById('btn-historico');
@@ -54,23 +42,17 @@ const btnSaveParticipants = document.getElementById('btn-save-participants');
 const participantsInput = document.getElementById('participants-input');
 const btnClearHistory = document.getElementById('btn-clear-history');
 
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
 function init() {
     atualizarContador();
     btnSortear.addEventListener('click', iniciarSorteio);
     btnNovoSorteio.addEventListener('click', resetParaHome);
     
-    // Fullscreen
     btnFullscreen.addEventListener('click', toggleFullScreen);
     
-    // Config Modal
     btnConfig.addEventListener('click', abrirModalConfig);
     btnCloseConfig.addEventListener('click', () => configModal.classList.remove('active'));
     btnSaveParticipants.addEventListener('click', salvarParticipantes);
     
-    // History Modal
     btnHistorico.addEventListener('click', () => {
         atualizarHistorico();
         historyModal.classList.add('active');
@@ -80,7 +62,6 @@ function init() {
 }
 
 function abrirModalConfig() {
-    // Preenche a textarea com a lista atual
     participantsInput.value = participantes.join('\n');
     configModal.classList.add('active');
 }
@@ -99,16 +80,13 @@ function toggleFullScreen() {
 
 function salvarParticipantes() {
     const lines = participantsInput.value.split('\n');
-    // Filtra linhas vazias
     participantes = lines.map(line => line.trim()).filter(line => line.length > 0);
     
-    // Salva no localStorage
     localStorage.setItem('mendes_participantes', JSON.stringify(participantes));
     
     atualizarContador();
     configModal.classList.remove('active');
     
-    // Reseta o botão de sorteio caso estivesse desativado
     btnSortear.disabled = false;
     btnSortear.innerHTML = '<span class="btn-icon">⚽</span> SORTEAR AGORA!';
     btnSortear.style.opacity = "1";
@@ -133,19 +111,13 @@ function atualizarContador() {
 }
 
 function mudarTela(telaAtiva) {
-    // Esconde todas as telas
     Object.values(screens).forEach(screen => {
         screen.classList.remove('active');
         screen.classList.add('hidden');
     });
-    // Mostra a tela desejada
     telaAtiva.classList.remove('hidden');
     telaAtiva.classList.add('active');
 }
-
-// ==========================================
-// FLUXO DO SORTEIO
-// ==========================================
 
 function iniciarSorteio() {
     if (participantes.length === 0) return;
@@ -156,8 +128,7 @@ function iniciarSorteio() {
     let count = 3;
     elCountdown.textContent = count;
     
-    // Animação inicial
-    void elCountdown.offsetWidth; // Trigger reflow
+    void elCountdown.offsetWidth;
     elCountdown.classList.add('animate');
     
     const interval = setInterval(() => {
@@ -171,21 +142,19 @@ function iniciarSorteio() {
             clearInterval(interval);
             iniciarRolagem();
         }
-    }, 1200); // 1.2s para cada número dar tempo da animação
+    }, 1200);
 }
 
 function iniciarRolagem() {
     mudarTela(screens.draw);
     
     let spinCount = 0;
-    const maxSpins = 40; // Quantas vezes o nome vai trocar antes de parar (velocidade alta)
-    const spinSpeed = 80; // Milissegundos por troca
+    const maxSpins = 40;
+    const spinSpeed = 80;
     
-    // Embaralha para dar a sensação de aleatoriedade na roleta
     const nomesEmbaralhados = [...participantes].sort(() => 0.5 - Math.random());
     
     const rolagemInterval = setInterval(() => {
-        // Exibe nomes aleatórios passando rápido
         elRouletteNames.textContent = nomesEmbaralhados[spinCount % nomesEmbaralhados.length];
         spinCount++;
         
@@ -199,58 +168,45 @@ function iniciarRolagem() {
 function exibirGol() {
     mudarTela(screens.gol);
     
-    // O "GOOOOOOL" fica na tela por um curto período (surpresa)
     setTimeout(() => {
         exibirPremioAntesDoVencedor();
-    }, 1500); // 1.5 segundos
+    }, 1500);
 }
 
 function exibirPremioAntesDoVencedor() {
     mudarTela(screens.prizeReveal);
     
-    // Mostra o prêmio em destaque por 2.5s antes de revelar o nome do ganhador
     setTimeout(() => {
         escolherVencedor();
     }, 2500);
 }
 
 function escolherVencedor() {
-    // Sorteio real acontece aqui
     const randomIndex = Math.floor(Math.random() * participantes.length);
     const vencedor = participantes[randomIndex];
     
-    // Remove o vencedor da lista
     participantes.splice(randomIndex, 1);
     
-    // Adiciona ao histórico
     vencedoresHistory.push({
         nome: vencedor,
         hora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
     });
     
-    // Salva no localStorage
     localStorage.setItem('mendes_historico', JSON.stringify(vencedoresHistory));
     localStorage.setItem('mendes_participantes', JSON.stringify(participantes));
     
     atualizarHistorico();
     
-    // Configura tela e exibe
     elWinnerName.textContent = vencedor;
     mudarTela(screens.winner);
     
-    // Dispara a animação principal da tela de vencedor
     setTimeout(() => {
         document.querySelector('.winner-content').classList.add('show');
         lancarConfetes();
     }, 100);
 }
 
-// ==========================================
-// EFEITOS E CONFETES
-// ==========================================
-
 function lancarConfetes() {
-    // Efeito de explosão central inicial (Fogos de artifício no Canvas)
     var duration = 4000;
     var animationEnd = Date.now() + duration;
     var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -259,7 +215,6 @@ function lancarConfetes() {
       return Math.random() * (max - min) + min;
     }
 
-    // Intervalo disparando confetes
     var interval = setInterval(function() {
       var timeLeft = animationEnd - Date.now();
 
@@ -268,7 +223,6 @@ function lancarConfetes() {
       }
 
       var particleCount = 50 * (timeLeft / duration);
-      // Confetes das bordas laterais (Estilo estádio)
       confetti(Object.assign({}, defaults, { 
           particleCount,
           origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
@@ -281,7 +235,6 @@ function lancarConfetes() {
       }));
     }, 250);
     
-    // Explosão dourada no centro
     confetti({
         particleCount: 150,
         spread: 100,
@@ -289,10 +242,6 @@ function lancarConfetes() {
         colors: ['#FFD700', '#FFCC00']
     });
 }
-
-// ==========================================
-// CONTROLE E ESTADO
-// ==========================================
 
 function resetParaHome() {
     document.querySelector('.winner-content').classList.remove('show');
@@ -308,7 +257,6 @@ function atualizarHistorico() {
         return;
     }
     
-    // Mostra do mais recente para o mais antigo
     [...vencedoresHistory].reverse().forEach(v => {
         const li = document.createElement('li');
         li.innerHTML = `<strong>${v.nome}</strong> <span>(${v.hora})</span>`;
@@ -316,5 +264,4 @@ function atualizarHistorico() {
     });
 }
 
-// Inicia o app
 init();

@@ -1,8 +1,3 @@
-/* 
-  Sorteio Mendes Holler - Estilo Principal 
-  Tema: Copa do Mundo, Estádio, Suspense, Elegante
-*/
-
 :root {
     --color-dark-red: #3b0909;
     --color-black: #0d0202;
@@ -32,7 +27,6 @@ body {
     align-items: center;
 }
 
-/* Background Effect - Stadium lights */
 body::before {
     content: '';
     position: absolute;
@@ -44,7 +38,6 @@ body::before {
     z-index: 0;
 }
 
-/* Screens */
 .screen {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -65,7 +58,6 @@ body::before {
     z-index: 20;
 }
 
-/* Home Screen */
 #home-screen {
     padding: 2rem;
 }
@@ -119,7 +111,6 @@ body::before {
     font-weight: 700;
 }
 
-/* Prize Lateral (Na Tela Inicial) */
 .prize-side-container {
     position: absolute;
     right: -2%; 
@@ -134,7 +125,6 @@ body::before {
 
 .prize-side-img {
     width: 100%;
-    /* Aplica um degradê radial para apagar as bordas da imagem e fundir com o fundo */
     -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%);
     mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%);
     filter: drop-shadow(0 0 20px rgba(255,215,0,0.3));
@@ -159,7 +149,6 @@ body::before {
     font-size: 1.5rem;
 }
 
-/* Buttons */
 .btn-primary {
     background: linear-gradient(45deg, var(--color-gold), var(--color-yellow));
     color: var(--color-black);
@@ -206,7 +195,6 @@ body::before {
     color: #888;
 }
 
-/* Suspense Screen */
 #suspense-screen {
     background: rgba(0,0,0,0.9);
 }
@@ -232,7 +220,6 @@ body::before {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* Draw Screen */
 .roulette-container {
     height: 150px;
     overflow: hidden;
@@ -277,7 +264,6 @@ body::before {
     pointer-events: none;
 }
 
-/* Gol Screen */
 #gol-screen {
     background: #000;
 }
@@ -308,7 +294,6 @@ body::before {
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-/* Prize Reveal Screen */
 #prize-reveal-screen {
     background: radial-gradient(circle at center, rgba(255,215,0,0.2) 0%, rgba(0,0,0,0.9) 80%);
 }
@@ -339,7 +324,6 @@ body::before {
     50% { opacity: 1; }
 }
 
-/* Winner Screen */
 #winner-screen {
     background: radial-gradient(circle at center, rgba(59, 9, 9, 0.9) 0%, #000 100%);
 }
@@ -392,7 +376,6 @@ body::before {
 
 .mt-2 { margin-top: 2rem; }
 
-/* Control Panel */
 #control-panel {
     position: absolute;
     top: 20px;
@@ -454,7 +437,6 @@ textarea#participants-input:focus {
     font-style: italic;
 }
 
-/* Modal */
 .modal {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -512,7 +494,6 @@ textarea#participants-input:focus {
     font-size: 1.1rem;
 }
 
-/* Responsivo */
 @media (max-width: 768px) {
     .brush-text { font-size: 2.5rem; }
     .gold-text { font-size: 1.5rem; }
