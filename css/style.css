@@ -116,8 +116,8 @@ body::before {
     right: -2%; 
     top: 50%;
     transform: translateY(-50%);
-    width: 38vw; 
-    max-width: 480px; 
+    width: 40vw; 
+    max-width: 500px; 
     z-index: 5;
     pointer-events: none;
     animation: floatSidePrize 5s ease-in-out infinite;
