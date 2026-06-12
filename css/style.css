@@ -122,11 +122,11 @@ body::before {
 /* Prize Lateral (Na Tela Inicial) */
 .prize-side-container {
     position: absolute;
-    right: -5%; /* Mais colado ainda na direita */
+    right: -2%; 
     top: 50%;
     transform: translateY(-50%);
-    width: 30vw; /* Bem menor */
-    max-width: 350px; /* Reduzido para garantir espaço para o texto */
+    width: 38vw; 
+    max-width: 480px; 
     z-index: 5;
     pointer-events: none;
     animation: floatSidePrize 5s ease-in-out infinite;
