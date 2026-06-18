@@ -80,12 +80,30 @@
     </div>
 
     <div id="config-modal" class="modal hidden">
-        <div class="modal-content">
+        <div class="modal-content modal-content-wide">
             <span class="close-btn" id="close-config">&times;</span>
-            <h2>Lista de Participantes</h2>
-            <p style="margin-bottom: 10px; font-size: 0.9rem; color: #aaa;">Cole a lista de nomes abaixo (um por linha):</p>
-            <textarea id="participants-input" rows="10" placeholder="João Silva&#10;Maria Oliveira&#10;Carlos Eduardo"></textarea>
-            <button id="btn-save-participants" class="btn-secondary" style="width: 100%; margin-top: 15px;">Salvar Participantes</button>
+            <h2>Gestão de Participantes</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-target="content-view">Urna</button>
+                <button class="tab-btn" data-target="content-edit">Editar Lista</button>
+                <button class="tab-btn" data-target="content-winners">Ganhadores</button>
+            </div>
+
+            <div id="content-view" class="tab-content active">
+                <ul id="participants-view-list" class="styled-list"></ul>
+            </div>
+
+            <div id="content-edit" class="tab-content">
+                <p style="margin-bottom: 10px; font-size: 0.9rem; color: #aaa;">Cole sua lista (um nome por linha). Aspas, números e vírgulas são removidos automaticamente.</p>
+                <textarea id="participants-input" rows="8" placeholder="João Silva&#10;Maria Oliveira&#10;Carlos Eduardo"></textarea>
+                <button id="btn-save-participants" class="btn-secondary" style="width: 100%; margin-top: 15px;">Atualizar Urna</button>
+            </div>
+
+            <div id="content-winners" class="tab-content">
+                <div id="winners-by-date"></div>
+                <button id="btn-show-winners-overlay" class="btn-secondary" style="width: 100%; margin-top: 15px;">Mostrar na Tela (para print)</button>
+            </div>
         </div>
     </div>
 
@@ -97,6 +115,17 @@
             </ul>
             <p class="history-note">* Os sorteios são salvos apenas localmente (neste computador/navegador).</p>
             <button id="btn-clear-history" class="btn-small" style="margin-top: 15px; width: 100%; background: #550000;">Limpar Histórico</button>
+        </div>
+    </div>
+
+    <div id="winners-overlay" class="winners-overlay hidden">
+        <button id="btn-close-overlay" class="overlay-close-btn">&times;</button>
+        <div class="overlay-card">
+            <img src="assets/imagens/logo.jpg" alt="Mendes Holler" class="overlay-logo">
+            <h2 class="overlay-title">GANHADORES DO DIA</h2>
+            <p id="overlay-date" class="overlay-date"></p>
+            <div id="overlay-winners-list" class="overlay-winners"></div>
+            <p class="overlay-footer">Parabéns! Entre em contato conosco para retirar seu prêmio! 🏆</p>
         </div>
     </div>
 
