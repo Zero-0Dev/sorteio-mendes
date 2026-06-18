@@ -37,6 +37,12 @@ const tabContents = document.querySelectorAll('.tab-content');
 const btnShowOverlay = document.getElementById('btn-show-winners-overlay');
 const btnCloseOverlay = document.getElementById('btn-close-overlay');
 const winnersOverlay = document.getElementById('winners-overlay');
+const btnExportBackup = document.getElementById('btn-export-backup');
+const btnImportBackup = document.getElementById('btn-import-backup');
+const importFileInput = document.getElementById('import-file-input');
+const btnAddManualWinner = document.getElementById('btn-add-manual-winner');
+const manualWinnerName = document.getElementById('manual-winner-name');
+const manualWinnerDate = document.getElementById('manual-winner-date');
 
 function init() {
     atualizarContador();
@@ -67,6 +73,11 @@ function init() {
     
     btnShowOverlay.addEventListener('click', mostrarOverlayGanhadores);
     btnCloseOverlay.addEventListener('click', () => winnersOverlay.classList.add('hidden'));
+    
+    btnExportBackup.addEventListener('click', exportarBackup);
+    btnImportBackup.addEventListener('click', () => importFileInput.click());
+    importFileInput.addEventListener('change', importarBackup);
+    btnAddManualWinner.addEventListener('click', adicionarGanhadorManual);
 }
 
 function abrirModalConfig() {
@@ -393,6 +404,121 @@ function atualizarHistorico() {
         li.innerHTML = `<strong>${v.nome}</strong> <span>(${v.hora})</span>`;
         elHistoryList.appendChild(li);
     });
+}
+
+function exportarBackup() {
+    const dados = {
+        versao: '1.0',
+        dataExportacao: new Date().toLocaleString('pt-BR'),
+        participantes: participantes,
+        todosParticipantes: todosParticipantes,
+        historico: vencedoresHistory
+    };
+    
+    const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup_sorteio_mendes_${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    alert('Backup exportado com sucesso!');
+}
+
+function importarBackup(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const dados = JSON.parse(e.target.result);
+            
+            if (!dados.participantes || !dados.historico) {
+                alert('Arquivo inválido! O arquivo não contém os dados esperados.');
+                return;
+            }
+            
+            if (!confirm(`Deseja restaurar o backup de ${dados.dataExportacao || 'data desconhecida'}?\n\n` +
+                `• ${dados.participantes.length} participantes na urna\n` +
+                `• ${dados.historico.length} ganhadores no histórico\n\n` +
+                `⚠️ Isso substituirá todos os dados atuais!`)) {
+                return;
+            }
+            
+            participantes = dados.participantes;
+            todosParticipantes = dados.todosParticipantes || [...dados.participantes];
+            vencedoresHistory = dados.historico;
+            
+            localStorage.setItem('mendes_participantes', JSON.stringify(participantes));
+            localStorage.setItem('mendes_todos_participantes', JSON.stringify(todosParticipantes));
+            localStorage.setItem('mendes_historico', JSON.stringify(vencedoresHistory));
+            
+            atualizarContador();
+            renderizarVisualizacao();
+            renderizarAbaGanhadores();
+            participantsInput.value = participantes.join('\n');
+            
+            alert(`Backup restaurado com sucesso!\n${participantes.length} participantes e ${vencedoresHistory.length} ganhadores carregados.`);
+        } catch (err) {
+            alert('Erro ao ler o arquivo de backup. Verifique se é um arquivo .json válido.');
+        }
+    };
+    reader.readAsText(file);
+    importFileInput.value = '';
+}
+
+function adicionarGanhadorManual() {
+    const nome = manualWinnerName.value.trim();
+    let data = manualWinnerDate.value.trim();
+    
+    if (!nome) {
+        alert('Digite o nome do ganhador.');
+        manualWinnerName.focus();
+        return;
+    }
+    
+    if (!data) {
+        data = new Date().toLocaleDateString('pt-BR');
+    } else {
+        const partes = data.split('/');
+        if (partes.length !== 3 || partes[0].length < 1 || partes[1].length < 1 || partes[2].length !== 4) {
+            alert('Data inválida. Use o formato dd/mm/aaaa.');
+            manualWinnerDate.focus();
+            return;
+        }
+    }
+    
+    vencedoresHistory.push({
+        nome: nome.toUpperCase(),
+        hora: 'Manual',
+        data: data
+    });
+    
+    if (!todosParticipantes.includes(nome.toUpperCase())) {
+        todosParticipantes.push(nome.toUpperCase());
+        localStorage.setItem('mendes_todos_participantes', JSON.stringify(todosParticipantes));
+    }
+    
+    const idx = participantes.findIndex(p => p.toUpperCase() === nome.toUpperCase());
+    if (idx !== -1) {
+        participantes.splice(idx, 1);
+        localStorage.setItem('mendes_participantes', JSON.stringify(participantes));
+        atualizarContador();
+    }
+    
+    localStorage.setItem('mendes_historico', JSON.stringify(vencedoresHistory));
+    
+    manualWinnerName.value = '';
+    manualWinnerDate.value = '';
+    
+    renderizarAbaGanhadores();
+    renderizarVisualizacao();
+    
+    alert(`Ganhador "${nome.toUpperCase()}" registrado em ${data} com sucesso!`);
 }
 
 init();

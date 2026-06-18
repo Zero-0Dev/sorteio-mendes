@@ -28,24 +28,26 @@ O projeto está configurado como um **Single Page Application (SPA)** leve e est
 
 Para a continuidade do projeto, sugerimos as seguintes melhorias técnicas e de experiência do usuário:
 
-### 1. Funcionalidade de Backup e Restauração (Importar/Exportar)
+### 1. ✅ Funcionalidade de Backup e Restauração (Importar/Exportar) — CONCLUÍDO
 * **Objetivo**: Facilitar a migração de dados e evitar a perda do histórico caso o navegador seja limpo.
-* **O que fazer**:
-  - Criar um botão "Exportar Backup" na aba de configurações que gera um arquivo `.json` contendo a lista atual de participantes e o histórico de ganhadores.
-  - Criar um botão "Importar Backup" para ler esse arquivo `.json` e restaurar o estado completo no `localStorage`.
+* **Implementado**:
+  - Botão "📥 Exportar Backup" na aba Editar Lista que gera um arquivo `.json` contendo a lista atual de participantes e o histórico de ganhadores.
+  - Botão "📤 Importar Backup" que lê o arquivo `.json` e restaura o estado completo no `localStorage`, com confirmação antes de sobrescrever.
 
-### 2. Cadastro Manual de Ganhadores Anteriores pela Interface
-* **Objetivo**: Evitar a necessidade de usar o Console do navegador (`F12`) para inserir sorteios antigos (como os de 12/06).
-* **O que fazer**:
-  - Adicionar um formulário simples (Nome e Data) na aba "Ganhadores" para permitir a inserção manual de vencedores históricos direto pela tela.
+### 2. ✅ Cadastro Manual de Ganhadores Anteriores pela Interface — CONCLUÍDO
+* **Objetivo**: Evitar a necessidade de usar o Console do navegador (`F12`) para inserir sorteios antigos.
+* **Implementado**:
+  - Formulário com campos (Nome e Data no formato dd/mm/aaaa) na aba "Ganhadores" para inserção manual.
+  - O ganhador é automaticamente removido da urna ativa e marcado como vencedor na lista de visualização.
+  - Se a data não for preenchida, usa a data de hoje.
 
-### 3. Melhoria na Gestão de Vencedores (Destaque e Exclusão)
+### 3. ⬜ Melhoria na Gestão de Vencedores (Destaque e Exclusão) — FUTURO
 * **Objetivo**: Dar mais controle sobre o status dos participantes já sorteados.
 * **O que fazer**:
   - Permitir reintroduzir um ganhador de volta à urna caso seja necessário.
   - Opção para alternar se um ganhador anterior deve ser totalmente removido das edições ou se ele pode voltar a concorrer no futuro.
 
-### 4. Validação de Assets (Imagens e Sons)
+### 4. ⬜ Validação de Assets (Imagens e Sons) — FUTURO
 * **Objetivo**: Substituir as imagens provisórias pelas oficiais da Mendes Holler.
 * **O que fazer**:
   - Inserir a imagem da logo da empresa em `assets/imagens/logo.jpg`.

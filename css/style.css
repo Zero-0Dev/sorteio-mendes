@@ -663,6 +663,85 @@ textarea#participants-input:focus {
     font-size: 1.1rem;
 }
 
+/* Backup Section */
+.backup-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+}
+.backup-section h4 {
+    color: var(--color-gold);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+.backup-buttons {
+    display: flex;
+    gap: 10px;
+}
+.btn-backup {
+    flex: 1;
+    background: rgba(255, 215, 0, 0.08);
+    color: var(--color-gold);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+.btn-backup:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: var(--color-gold);
+}
+.backup-hint {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Manual Winner Section */
+.manual-winner-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+}
+.manual-winner-section h4 {
+    color: var(--color-gold);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+.manual-winner-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.input-dark {
+    background: #111;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 9px 12px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+.input-dark:focus {
+    outline: none;
+    border-color: var(--color-gold);
+}
+.input-dark::placeholder {
+    color: #555;
+}
+.manual-winner-form .input-dark:first-child {
+    flex: 2;
+}
+.input-short {
+    width: 120px;
+    flex: 1 !important;
+}
+
 @media (max-width: 768px) {
     .brush-text { font-size: 2.5rem; }
     .gold-text { font-size: 1.5rem; }
