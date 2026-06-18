@@ -15,6 +15,7 @@ const screens = {
 };
 
 const elParticipantCount = document.getElementById('participant-count');
+const elUrnCountText = document.getElementById('urn-count-text');
 const elCountdown = document.getElementById('countdown');
 const elRouletteNames = document.getElementById('roulette-names');
 const elWinnerName = document.getElementById('winner-name');
@@ -88,6 +89,9 @@ function abrirModalConfig() {
 }
 
 function renderizarVisualizacao() {
+    if (elUrnCountText) {
+        elUrnCountText.textContent = `Total de participantes ativos na urna: ${participantes.length}`;
+    }
     const listEl = document.getElementById('participants-view-list');
     listEl.innerHTML = '';
     
