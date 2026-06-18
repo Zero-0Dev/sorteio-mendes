@@ -521,4 +521,53 @@ function adicionarGanhadorManual() {
     alert(`Ganhador "${nome.toUpperCase()}" registrado em ${data} com sucesso!`);
 }
 
+// === Efeito de brilho sutil que segue o mouse ===
+(function() {
+    const glowCanvas = document.getElementById('glow-canvas');
+    if (!glowCanvas) return;
+    const glowCtx = glowCanvas.getContext('2d');
+
+    function resizeGlowCanvas() {
+        glowCanvas.width = glowCanvas.offsetWidth;
+        glowCanvas.height = glowCanvas.offsetHeight;
+    }
+    resizeGlowCanvas();
+    window.addEventListener('resize', resizeGlowCanvas);
+
+    let gMouseX = -1000, gMouseY = -1000;
+    let gSmoothX = -1000, gSmoothY = -1000;
+
+    document.addEventListener('mousemove', (e) => {
+        const rect = glowCanvas.getBoundingClientRect();
+        gMouseX = e.clientX - rect.left;
+        gMouseY = e.clientY - rect.top;
+    });
+
+    document.addEventListener('mouseleave', () => {
+        gMouseX = -1000;
+        gMouseY = -1000;
+    });
+
+    function animateGlow() {
+        glowCtx.clearRect(0, 0, glowCanvas.width, glowCanvas.height);
+
+        gSmoothX += (gMouseX - gSmoothX) * 0.05;
+        gSmoothY += (gMouseY - gSmoothY) * 0.05;
+
+        if (gMouseX > 0) {
+            const glow = glowCtx.createRadialGradient(gSmoothX, gSmoothY, 0, gSmoothX, gSmoothY, 300);
+            glow.addColorStop(0, 'rgba(255, 215, 0, 0.045)');
+            glow.addColorStop(0.4, 'rgba(80, 20, 10, 0.025)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+            glowCtx.fillStyle = glow;
+            glowCtx.fillRect(0, 0, glowCanvas.width, glowCanvas.height);
+        }
+
+        requestAnimationFrame(animateGlow);
+    }
+
+    animateGlow();
+})();
+
 init();
