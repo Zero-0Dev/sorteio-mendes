@@ -244,13 +244,21 @@ function limparHistorico() {
 
 function atualizarContador() {
     elParticipantCount.textContent = participantes.length;
-    if (participantes.length === 0) {
+    if (participantes.length === 0 && vencedoresHistory.length > 0) {
         btnSortear.disabled = true;
         btnSortear.innerHTML = "SORTEIO ENCERRADO";
+        btnSortear.style.opacity = "0.5";
+    } else if (participantes.length === 0) {
+        btnSortear.disabled = true;
+        btnSortear.innerHTML = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
         btnSortear.style.opacity = "0.5";
     } else if (vencedoresHistory.length > 0) {
         btnSortear.disabled = false;
         btnSortear.innerHTML = '<span class="btn-icon">⚽</span> SORTEAR NOVAMENTE';
+        btnSortear.style.opacity = "1";
+    } else {
+        btnSortear.disabled = false;
+        btnSortear.innerHTML = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
         btnSortear.style.opacity = "1";
     }
 }
