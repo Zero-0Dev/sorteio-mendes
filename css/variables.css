@@ -1,0 +1,19 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Variáveis centrais do projeto. Altere os valores aqui para refletir
+   automaticamente em todo o site.
+   ========================================================================== */
+
+:root {
+    /* Cores principais da marca */
+    --color-dark-red: #3b0909;
+    --color-black: #0d0202;
+    --color-gold: #FFD700;
+    --color-yellow: #FFCC00;
+    --color-green: #008000;
+    --color-light-green: #28a745;
+    --color-white: #ffffff;
+
+    /* Tipografia */
+    --font-main: 'Montserrat', sans-serif;
+}

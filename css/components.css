@@ -1,0 +1,228 @@
+/* ==========================================================================
+   COMPONENTES REUTILIZÁVEIS
+   Botões, inputs, tabs, e outros elementos de UI compartilhados.
+   ========================================================================== */
+
+/* --- Botão Principal (CTA de sorteio) --- */
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--color-gold), var(--color-yellow));
+    color: var(--color-black);
+    border: none;
+    padding: 20px 50px;
+    font-size: 2rem;
+    font-weight: 900;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.4);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 30px rgba(255,215,0,0.6);
+}
+
+/* --- Botão Secundário (bordas) --- */
+
+.btn-secondary {
+    background: transparent;
+    color: var(--color-gold);
+    border: 2px solid var(--color-gold);
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: var(--color-gold);
+    color: var(--color-black);
+}
+
+/* --- Botão Pequeno (painel de controle) --- */
+
+.btn-small {
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: 1px solid #555;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-small:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* --- Botão com Apenas Ícone --- */
+
+.btn-icon-only {
+    background: transparent;
+    color: #888;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    transition: color 0.3s;
+}
+
+.btn-icon-only:hover {
+    color: var(--color-gold);
+}
+
+/* --- Botão de Backup --- */
+
+.btn-backup {
+    flex: 1;
+    background: rgba(255, 215, 0, 0.08);
+    color: var(--color-gold);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.btn-backup:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: var(--color-gold);
+}
+
+/* --- Inputs de Texto --- */
+
+.input-dark {
+    background: #111;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 9px 12px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+
+.input-dark:focus {
+    outline: none;
+    border-color: var(--color-gold);
+}
+
+.input-dark::placeholder {
+    color: #555;
+}
+
+.input-short {
+    width: 120px;
+    flex: 1 !important;
+}
+
+/* --- Textarea --- */
+
+textarea#participants-input {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 5px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+textarea#participants-input:focus {
+    outline: none;
+    border-color: var(--color-gold);
+}
+
+/* --- Sistema de Tabs (abas) --- */
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #333;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    color: #888;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+    color: var(--color-white);
+}
+
+.tab-btn.active {
+    color: var(--color-gold);
+    border-bottom: 2px solid var(--color-gold);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* --- Lista Estilizada (participantes na urna) --- */
+
+.styled-list {
+    list-style: none;
+    max-height: 250px;
+    overflow-y: auto;
+    color: #fff;
+    font-size: 0.95rem;
+    padding-right: 10px;
+    text-align: left;
+    counter-reset: participant-counter;
+}
+
+.styled-list li {
+    padding: 8px 10px;
+    border-bottom: 1px solid #222;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    counter-increment: participant-counter;
+}
+
+.styled-list li::before {
+    content: counter(participant-counter) ".";
+    color: #666;
+    font-weight: bold;
+    min-width: 25px;
+}
+
+.styled-list li.winner-in-list {
+    background: rgba(255, 215, 0, 0.08);
+    border-left: 3px solid var(--color-gold);
+    opacity: 0.7;
+}
+
+.styled-list li.winner-in-list .winner-badge {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--color-gold);
+    white-space: nowrap;
+}

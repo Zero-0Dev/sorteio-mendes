@@ -1,14 +1,34 @@
-# Sorteio Corporativo - Mendes Holler
+# Sorteio Corporativo
 
-Sistema estático de sorteios focado em campanhas internas da Mendes Holler. 
-Desenvolvido para gerar uma experiência de alto impacto visual.
+Sistema estático de sorteios com experiência de alto impacto visual.
 
-## Funcionalidades Principais
+## Funcionalidades
 
-- Sorteio aleatório com painel de suspense e revelação do prêmio.
-- Painel de controle integrado para edição instantânea da lista de participantes.
-- Histórico de ganhadores (salvo localmente).
+- Sorteio aleatório com contagem regressiva, roleta de nomes e revelação do prêmio.
+- Painel de controle para edição instantânea da lista de participantes.
+- Histórico de ganhadores (persistido localmente no navegador).
+- Backup e restauração dos dados via arquivo JSON.
+- Cadastro manual de ganhadores.
+- Overlay fullscreen para print dos ganhadores do dia.
 - Modo Tela Cheia nativo.
+
+## Estrutura do Projeto
+
+```
+├── index.html                  Página principal
+├── css/
+│   ├── style.css               Ponto de entrada (importa os demais)
+│   ├── variables.css           Cores, fontes e tokens de design
+│   ├── base.css                Reset, body e sistema de telas
+│   ├── components.css          Botões, inputs, tabs, listas
+│   ├── screens.css             Telas do fluxo de sorteio
+│   ├── modals.css              Modais, overlays e painel de controle
+│   └── responsive.css          Ajustes para telas menores
+├── js/
+│   └── script.js               Aplicação (Storage → DOM → UI → Sorteio → Effects)
+└── assets/
+    └── imagens/                Logo e imagem do prêmio
+```
 
 ## Tecnologias
 
@@ -18,6 +38,5 @@ Desenvolvido para gerar uma experiência de alto impacto visual.
 
 ## Execução
 
-O sistema não necessita de banco de dados ou servidor back-end.
-Para executá-lo, basta abrir o arquivo `index.html` em qualquer navegador web moderno. 
-Compatível com deploy gratuito via GitHub Pages.
+Abra `index.html` em qualquer navegador moderno.
+Compatível com deploy via GitHub Pages.
