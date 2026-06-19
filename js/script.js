@@ -256,10 +256,6 @@ function atualizarContador() {
         btnSortear.disabled = true;
         btnSortear.innerHTML = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
         btnSortear.style.opacity = "0.5";
-    } else if (vencedoresHistory.length > 0) {
-        btnSortear.disabled = false;
-        btnSortear.innerHTML = '<span class="btn-icon">⚽</span> SORTEAR NOVAMENTE';
-        btnSortear.style.opacity = "1";
     } else {
         btnSortear.disabled = false;
         btnSortear.innerHTML = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
