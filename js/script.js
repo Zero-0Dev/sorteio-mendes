@@ -47,6 +47,17 @@ function salvarHistoricoStorage() {
     localStorage.setItem(STORAGE_KEYS.historico, JSON.stringify(vencedoresHistory));
 }
 
+/**
+ * Retorna apenas os participantes elegíveis para sorteio
+ * (exclui quem já foi sorteado / registrado como ganhador).
+ */
+function getElegiveis() {
+    const nomesGanhadores = new Set(
+        vencedoresHistory.map(v => v.nome.toUpperCase())
+    );
+    return participantes.filter(p => !nomesGanhadores.has(p.toUpperCase()));
+}
+
 
 /* ==========================================================================
    2. DOM — Referências aos elementos da página
@@ -101,10 +112,15 @@ const btnExportBackup     = document.getElementById('btn-export-backup');
 const btnImportBackup     = document.getElementById('btn-import-backup');
 const importFileInput     = document.getElementById('import-file-input');
 
-// Ganhador manual
+// Ganhador manual (aba Ganhadores)
 const btnAddManualWinner  = document.getElementById('btn-add-manual-winner');
 const manualWinnerName    = document.getElementById('manual-winner-name');
 const manualWinnerDate    = document.getElementById('manual-winner-date');
+
+// Ganhador anterior (aba Editar Lista)
+const btnEditAddWinner       = document.getElementById('btn-edit-add-winner');
+const editManualWinnerName   = document.getElementById('edit-manual-winner-name');
+const editManualWinnerDate   = document.getElementById('edit-manual-winner-date');
 
 
 /* ==========================================================================
@@ -131,13 +147,14 @@ function resetParaHome() {
 // --- Botão de sorteio ---
 
 function atualizarContador() {
+    const elegiveis = getElegiveis();
     elParticipantCount.textContent = participantes.length;
 
-    if (participantes.length === 0 && vencedoresHistory.length > 0) {
+    if (elegiveis.length === 0 && vencedoresHistory.length > 0) {
         btnSortear.disabled      = true;
         btnSortear.innerHTML     = 'SORTEIO ENCERRADO';
         btnSortear.style.opacity = '0.5';
-    } else if (participantes.length === 0) {
+    } else if (elegiveis.length === 0) {
         btnSortear.disabled      = true;
         btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
         btnSortear.style.opacity = '0.5';
@@ -151,8 +168,9 @@ function atualizarContador() {
 // --- Renderização de listas ---
 
 function renderizarVisualizacao() {
+    const elegiveis = getElegiveis();
     if (elUrnCountText) {
-        elUrnCountText.textContent = `Total de participantes ativos na urna: ${participantes.length}`;
+        elUrnCountText.textContent = `Participantes na urna: ${participantes.length} | Elegíveis para sorteio: ${elegiveis.length}`;
     }
 
     const listEl = document.getElementById('participants-view-list');
@@ -336,13 +354,17 @@ function limparHistorico() {
     }
 }
 
-function adicionarGanhadorManual() {
-    const nome = manualWinnerName.value.trim();
-    let data   = manualWinnerDate.value.trim();
+/**
+ * Registra um ganhador manualmente a partir de campos de input genéricos.
+ * Reutilizado tanto na aba "Ganhadores" quanto na aba "Editar Lista".
+ */
+function adicionarGanhadorManualGenerico(inputNome, inputData) {
+    const nome = inputNome.value.trim();
+    let data   = inputData.value.trim();
 
     if (!nome) {
         alert('Digite o nome do ganhador.');
-        manualWinnerName.focus();
+        inputNome.focus();
         return;
     }
 
@@ -352,9 +374,16 @@ function adicionarGanhadorManual() {
         const partes = data.split('/');
         if (partes.length !== 3 || partes[0].length < 1 || partes[1].length < 1 || partes[2].length !== 4) {
             alert('Data inválida. Use o formato dd/mm/aaaa.');
-            manualWinnerDate.focus();
+            inputData.focus();
             return;
         }
+    }
+
+    // Verifica se já está registrado como ganhador
+    const jaGanhou = vencedoresHistory.some(v => v.nome.toUpperCase() === nome.toUpperCase());
+    if (jaGanhou) {
+        alert(`"${nome.toUpperCase()}" já está registrado como ganhador.`);
+        return;
     }
 
     vencedoresHistory.push({
@@ -372,18 +401,23 @@ function adicionarGanhadorManual() {
     if (idx !== -1) {
         participantes.splice(idx, 1);
         salvarParticipantesStorage();
-        atualizarContador();
     }
 
     salvarHistoricoStorage();
+    atualizarContador();
 
-    manualWinnerName.value = '';
-    manualWinnerDate.value = '';
+    inputNome.value = '';
+    inputData.value = '';
 
     renderizarAbaGanhadores();
     renderizarVisualizacao();
 
     alert(`Ganhador "${nome.toUpperCase()}" registrado em ${data} com sucesso!`);
+}
+
+/** Wrapper para o formulário da aba "Ganhadores". */
+function adicionarGanhadorManual() {
+    adicionarGanhadorManualGenerico(manualWinnerName, manualWinnerDate);
 }
 
 // --- Backup / Restauração ---
@@ -466,7 +500,8 @@ function importarBackup(event) {
    ========================================================================== */
 
 function iniciarSorteio() {
-    if (participantes.length === 0) return;
+    const elegiveis = getElegiveis();
+    if (elegiveis.length === 0) return;
 
     mudarTela(screens.suspense);
     elCountdown.classList.remove('animate');
@@ -498,7 +533,7 @@ function iniciarRolagem() {
     let spinCount      = 0;
     const maxSpins     = 40;
     const spinSpeed    = 80;
-    const embaralhados = [...participantes].sort(() => 0.5 - Math.random());
+    const embaralhados = [...getElegiveis()].sort(() => 0.5 - Math.random());
 
     const rolagemInterval = setInterval(() => {
         elRouletteNames.textContent = embaralhados[spinCount % embaralhados.length];
@@ -522,10 +557,13 @@ function exibirPremioAntesDoVencedor() {
 }
 
 function escolherVencedor() {
-    const randomIndex = Math.floor(Math.random() * participantes.length);
-    const vencedor    = participantes[randomIndex];
+    const elegiveis   = getElegiveis();
+    const randomIndex = Math.floor(Math.random() * elegiveis.length);
+    const vencedor    = elegiveis[randomIndex];
 
-    participantes.splice(randomIndex, 1);
+    // Remove da lista principal de participantes
+    const idxNaLista = participantes.indexOf(vencedor);
+    if (idxNaLista !== -1) participantes.splice(idxNaLista, 1);
 
     vencedoresHistory.push({
         nome: vencedor,
@@ -689,8 +727,11 @@ function init() {
     btnImportBackup.addEventListener('click', () => importFileInput.click());
     importFileInput.addEventListener('change', importarBackup);
 
-    // Ganhador manual
+    // Ganhador manual (aba Ganhadores + aba Editar Lista)
     btnAddManualWinner.addEventListener('click', adicionarGanhadorManual);
+    btnEditAddWinner.addEventListener('click', () => {
+        adicionarGanhadorManualGenerico(editManualWinnerName, editManualWinnerDate);
+    });
 }
 
 init();

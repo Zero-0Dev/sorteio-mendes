@@ -101,6 +101,16 @@
                 <textarea id="participants-input" rows="8" placeholder="João Silva&#10;Maria Oliveira&#10;Carlos Eduardo"></textarea>
                 <button id="btn-save-participants" class="btn-secondary" style="width: 100%; margin-top: 15px;">Atualizar Urna</button>
                 
+                <div class="manual-winner-section">
+                    <h4>🏆 Registrar Ganhador Anterior</h4>
+                    <p style="font-size: 0.8rem; color: #888; margin-bottom: 8px;">Adicione quem já ganhou em sorteios passados. Essa pessoa será automaticamente excluída dos próximos sorteios.</p>
+                    <div class="manual-winner-form">
+                        <input type="text" id="edit-manual-winner-name" placeholder="Nome completo do ganhador" class="input-dark">
+                        <input type="text" id="edit-manual-winner-date" placeholder="dd/mm/aaaa" class="input-dark input-short">
+                        <button id="btn-edit-add-winner" class="btn-backup">Adicionar</button>
+                    </div>
+                </div>
+
                 <div class="backup-section">
                     <h4>💾 Backup dos Dados</h4>
                     <div class="backup-buttons">
