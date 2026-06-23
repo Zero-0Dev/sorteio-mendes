@@ -170,43 +170,22 @@ function atualizarContador() {
 function renderizarVisualizacao() {
     const elegiveis = getElegiveis();
     if (elUrnCountText) {
-        elUrnCountText.textContent = `Participantes na urna: ${participantes.length} | Elegíveis para sorteio: ${elegiveis.length}`;
+        elUrnCountText.textContent = `Elegíveis para sorteio: ${elegiveis.length}`;
     }
 
     const listEl = document.getElementById('participants-view-list');
     listEl.innerHTML = '';
 
-    const winnerNames = new Map();
-    vencedoresHistory.forEach(v => {
-        winnerNames.set(v.nome, v.data || v.hora);
-    });
-
-    const todosNomes = [...new Set([...todosParticipantes])];
-
-    if (todosNomes.length === 0 && participantes.length === 0) {
-        listEl.innerHTML = '<li style="color: #888; list-style: none;">Nenhum participante cadastrado.</li>';
+    if (elegiveis.length === 0) {
+        listEl.innerHTML = '<li style="color: #888; list-style: none;">Nenhum participante elegível na urna.</li>';
         return;
     }
 
-    const aindaNaUrna  = [...participantes];
-    const jaSorteados  = todosNomes.filter(n => winnerNames.has(n));
-    const naoSorteados = todosNomes.filter(n => !winnerNames.has(n) && !aindaNaUrna.includes(n));
-    const listaFinal   = [...aindaNaUrna, ...jaSorteados, ...naoSorteados];
-
-    listaFinal.forEach(nome => {
+    elegiveis.forEach(nome => {
         const li       = document.createElement('li');
         const nameSpan = document.createElement('span');
         nameSpan.textContent = nome;
         li.appendChild(nameSpan);
-
-        if (winnerNames.has(nome)) {
-            li.classList.add('winner-in-list');
-            const badge       = document.createElement('span');
-            badge.className   = 'winner-badge';
-            badge.textContent = `\u{1F3C6} ${winnerNames.get(nome)}`;
-            li.appendChild(badge);
-        }
-
         listEl.appendChild(li);
     });
 }
