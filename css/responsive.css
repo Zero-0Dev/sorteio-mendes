@@ -4,11 +4,16 @@
    ========================================================================== */
 
 @media (max-width: 768px) {
-    .brush-text    { font-size: 2.5rem;  }
-    .gold-text     { font-size: 1.5rem;  }
-    .btn-primary   { font-size: 1.5rem; padding: 15px 30px; }
-    .giant-number  { font-size: 10rem;   }
-    #roulette-names { font-size: 2.5rem; }
-    .gol-text      { font-size: 5rem;    }
-    .winner-name   { font-size: 3rem;    }
+    .brush-text      { font-size: 2.5rem; }
+    .gold-text       { font-size: 3rem;   }
+    .campaign-phrase { font-size: 0.85rem; }
+    .btn-primary     { font-size: 1.5rem; padding: 15px 30px; }
+    .giant-number    { font-size: 10rem;  }
+    #roulette-names  { font-size: 2.5rem; }
+    .gol-text        { font-size: 5rem;   }
+    .winner-name     { font-size: 3rem;   }
+
+    .charity-badge-container { display: none; }
+    .clothes-box-container   { display: none; }
+    .prize-side-container    { width: 50vw; right: -5%; }
 }

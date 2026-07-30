@@ -24,43 +24,55 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    z-index: 10;
 }
 
 .main-logo {
-    max-height: 100px;
+    max-height: 60px;
     background: white;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 8px 16px;
+    border-radius: 8px;
     box-shadow: 0 0 20px rgba(255,255,255,0.2);
 }
 
 .campaign-title {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     transform: rotate(-2deg);
+    z-index: 10;
 }
 
 .brush-text {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 900;
     font-style: italic;
     color: var(--color-white);
     text-transform: uppercase;
     text-shadow: 4px 4px 0 var(--color-black), -2px -2px 0 var(--color-black);
-    line-height: 1.1;
+    line-height: 1.0;
 }
 
 .gold-text {
-    font-size: 2.5rem;
+    font-size: 5.5rem;
     color: var(--color-gold);
     font-weight: 900;
     text-transform: uppercase;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-    margin-top: 10px;
+    text-shadow: 0 0 30px rgba(255,215,0,0.5), 2px 2px 5px rgba(0,0,0,0.8);
+    margin-top: -5px;
+    line-height: 1.0;
+}
+
+.campaign-phrase {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    color: #ddd;
+    font-weight: 500;
+    font-style: italic;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
 
 .subtitle {
-    margin-top: 15px;
+    margin-top: 12px;
     font-size: 1.2rem;
     background: var(--color-green);
     display: inline-block;
@@ -69,13 +81,15 @@
     font-weight: 700;
 }
 
+/* --- Imagem do prêmio (direita) --- */
+
 .prize-side-container {
     position: absolute;
     right: -2%; 
     top: 50%;
     transform: translateY(-50%);
-    width: 40vw; 
-    max-width: 500px; 
+    width: 35vw; 
+    max-width: 450px; 
     z-index: 5;
     pointer-events: none;
     animation: floatSidePrize 5s ease-in-out infinite;
@@ -93,6 +107,80 @@
     0%   { transform: translateY(-50%) scale(1);    filter: brightness(1);   }
     50%  { transform: translateY(-52%) scale(1.02); filter: brightness(1.2); }
     100% { transform: translateY(-50%) scale(1);    filter: brightness(1);   }
+}
+
+/* --- Badge Exército da Salvação (esquerda) --- */
+
+.charity-badge-container {
+    position: absolute;
+    left: 3%;
+    top: 15%;
+    width: 12vw;
+    max-width: 140px;
+    min-width: 80px;
+    z-index: 10;
+    pointer-events: none;
+    animation: floatBadge 4s ease-in-out infinite;
+}
+
+.charity-badge-img {
+    width: 100%;
+    filter: drop-shadow(0 0 15px rgba(200, 0, 0, 0.4));
+}
+
+@keyframes floatBadge {
+    0%   { transform: translateY(0) scale(1);    }
+    50%  { transform: translateY(-8px) scale(1.03); }
+    100% { transform: translateY(0) scale(1);    }
+}
+
+/* --- Caixa de Agasalhos (inferior esquerda) --- */
+
+.clothes-box-container {
+    position: absolute;
+    left: -2%;
+    bottom: -5%;
+    width: 30vw;
+    max-width: 350px;
+    min-width: 180px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.clothes-box-img {
+    width: 100%;
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 70%);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 70%);
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+    opacity: 0.9;
+}
+
+/* --- Animação de Neve --- */
+
+#snow-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: #fff;
+    font-size: 1rem;
+    opacity: 0;
+    animation: snowfall linear infinite;
+    pointer-events: none;
+    user-select: none;
+}
+
+@keyframes snowfall {
+    0%   { transform: translateY(-10px) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.8; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
 
 /* Oculto da tela pública — visível apenas no painel admin */
@@ -114,6 +202,7 @@
     bottom: 20px;
     font-size: 0.9rem;
     color: #888;
+    z-index: 10;
 }
 
 /* --- Tela de Suspense (Contagem Regressiva) --- */

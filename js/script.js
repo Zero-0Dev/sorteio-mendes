@@ -156,11 +156,11 @@ function atualizarContador() {
         btnSortear.style.opacity = '0.5';
     } else if (elegiveis.length === 0) {
         btnSortear.disabled      = true;
-        btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
+        btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> SORTEAR';
         btnSortear.style.opacity = '0.5';
     } else {
         btnSortear.disabled      = false;
-        btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
+        btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> SORTEAR';
         btnSortear.style.opacity = '1';
     }
 }
@@ -319,7 +319,7 @@ function salvarParticipantes() {
     renderizarVisualizacao();
 
     btnSortear.disabled      = false;
-    btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> INICIAR SORTEIO';
+    btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> SORTEAR';
     btnSortear.style.opacity = '1';
 
     alert(`Sucesso! A urna agora tem ${participantes.length} participantes.`);
@@ -661,6 +661,28 @@ function lancarConfetes() {
     animate();
 })();
 
+// --- Neve animada ---
+
+function criarNeve() {
+    const container = document.getElementById('snow-container');
+    if (!container) return;
+
+    const flocos = ['❄', '❅', '❆', '✦'];
+    const total  = 25;
+
+    for (let i = 0; i < total; i++) {
+        const floco = document.createElement('span');
+        floco.className   = 'snowflake';
+        floco.textContent = flocos[Math.floor(Math.random() * flocos.length)];
+        floco.style.left             = Math.random() * 100 + '%';
+        floco.style.fontSize         = (Math.random() * 1.2 + 0.5) + 'rem';
+        floco.style.opacity          = (Math.random() * 0.3 + 0.15).toFixed(2);
+        floco.style.animationDuration = (Math.random() * 8 + 6) + 's';
+        floco.style.animationDelay    = (Math.random() * 10) + 's';
+        container.appendChild(floco);
+    }
+}
+
 
 /* ==========================================================================
    6. INIT — Inicialização
@@ -668,6 +690,7 @@ function lancarConfetes() {
 
 function init() {
     atualizarContador();
+    criarNeve();
 
     // Botões principais
     btnSortear.addEventListener('click', iniciarSorteio);
