@@ -6,14 +6,26 @@
 @media (max-width: 768px) {
     .brush-text      { font-size: 2.5rem; }
     .gold-text       { font-size: 3rem;   }
-    .campaign-phrase { font-size: 0.85rem; }
-    .btn-primary     { font-size: 1.5rem; padding: 15px 30px; }
+    .campaign-phrase { font-size: 0.8rem;  }
+    .subtitle        { font-size: 0.95rem; padding: 4px 12px; }
+    .btn-primary     { font-size: 1.4rem; padding: 14px 30px; }
     .giant-number    { font-size: 10rem;  }
     #roulette-names  { font-size: 2.5rem; }
     .gol-text        { font-size: 5rem;   }
     .winner-name     { font-size: 3rem;   }
 
+    .shield-watermark     { width: 200px; height: 200px; }
     .charity-badge-container { display: none; }
-    .clothes-box-container   { display: none; }
-    .prize-side-container    { width: 50vw; right: -5%; }
+    .clothes-box-container   { width: 40vw; left: -5%; bottom: -8%; }
+    .prize-side-container    { width: 45vw; right: -5%; }
+}
+
+@media (max-width: 480px) {
+    .brush-text      { font-size: 1.8rem; }
+    .gold-text       { font-size: 2.2rem; }
+    .campaign-phrase { font-size: 0.7rem;  }
+    .btn-primary     { font-size: 1.2rem; padding: 12px 25px; }
+
+    .clothes-box-container { display: none; }
+    .shield-watermark      { width: 150px; height: 150px; }
 }
