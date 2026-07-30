@@ -156,11 +156,11 @@ function atualizarContador() {
         btnSortear.style.opacity = '0.5';
     } else if (elegiveis.length === 0) {
         btnSortear.disabled      = true;
-        btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> SORTEAR';
+        btnSortear.innerHTML     = '<span class="btn-icon">🎁</span> SORTEAR';
         btnSortear.style.opacity = '0.5';
     } else {
         btnSortear.disabled      = false;
-        btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> SORTEAR';
+        btnSortear.innerHTML     = '<span class="btn-icon">🎁</span> SORTEAR';
         btnSortear.style.opacity = '1';
     }
 }
@@ -319,7 +319,7 @@ function salvarParticipantes() {
     renderizarVisualizacao();
 
     btnSortear.disabled      = false;
-    btnSortear.innerHTML     = '<span class="btn-icon">⚽</span> SORTEAR';
+    btnSortear.innerHTML     = '<span class="btn-icon">🎁</span> SORTEAR';
     btnSortear.style.opacity = '1';
 
     alert(`Sucesso! A urna agora tem ${participantes.length} participantes.`);
