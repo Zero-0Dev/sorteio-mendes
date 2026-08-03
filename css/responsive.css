@@ -1,31 +1,44 @@
 /* ==========================================================================
    RESPONSIVIDADE
-   Ajustes para telas menores (tablets e celulares).
+   Ajustes calibrados para tablets e celulares.
    ========================================================================== */
 
+/* Tablet (1024px) */
+@media (max-width: 1024px) {
+    .brush-text      { font-size: 3.8rem; }
+    .gold-text       { font-size: 4.2rem; }
+    .charity-badge-container { width: 140px; left: 1.5%; top: 12%; }
+    .clothes-box-container   { width: 34vw; max-width: 320px; left: -4%; }
+    .prize-side-container    { width: 38vw; max-width: 380px; }
+}
+
+/* Mobile Paisagem e Tablet Pequeno (768px) */
 @media (max-width: 768px) {
     .brush-text      { font-size: 2.5rem; }
-    .gold-text       { font-size: 3rem;   }
-    .campaign-phrase { font-size: 0.8rem;  }
-    .subtitle        { font-size: 0.95rem; padding: 4px 12px; }
-    .btn-primary     { font-size: 1.4rem; padding: 14px 30px; }
+    .gold-text       { font-size: 3.2rem; }
+    .campaign-phrase { font-size: 0.85rem; }
+    .subtitle        { font-size: 0.95rem; padding: 5px 14px; }
+    .btn-primary     { font-size: 1.4rem; padding: 14px 35px; }
     .giant-number    { font-size: 10rem;  }
     #roulette-names  { font-size: 2.5rem; }
     .gol-text        { font-size: 5rem;   }
     .winner-name     { font-size: 3rem;   }
 
-    .shield-watermark     { width: 200px; height: 200px; }
-    .charity-badge-container { display: none; }
-    .clothes-box-container   { width: 40vw; left: -5%; bottom: -8%; }
-    .prize-side-container    { width: 45vw; right: -5%; }
+    .shield-watermark        { width: 160px; height: 160px; }
+    .charity-badge-container { width: 100px; left: 2%; top: 10%; }
+    .clothes-box-container   { width: 36vw; left: -5%; bottom: 0px; }
+    .prize-side-container    { width: 42vw; right: -4%; }
 }
 
+/* Mobile Retrato (<480px) */
 @media (max-width: 480px) {
-    .brush-text      { font-size: 1.8rem; }
-    .gold-text       { font-size: 2.2rem; }
-    .campaign-phrase { font-size: 0.7rem;  }
-    .btn-primary     { font-size: 1.2rem; padding: 12px 25px; }
+    .brush-text      { font-size: 1.9rem; }
+    .gold-text       { font-size: 2.3rem; }
+    .campaign-phrase { font-size: 0.75rem; }
+    .btn-primary     { font-size: 1.2rem; padding: 12px 28px; }
 
-    .clothes-box-container { display: none; }
-    .shield-watermark      { width: 150px; height: 150px; }
+    .charity-badge-container { display: none; }
+    .clothes-box-container   { display: none; }
+    .shield-watermark      { width: 140px; height: 140px; }
+    .prize-side-container  { width: 55vw; right: -10%; opacity: 0.6; }
 }

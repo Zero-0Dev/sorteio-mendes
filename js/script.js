@@ -668,17 +668,17 @@ function criarNeve() {
     if (!container) return;
 
     const flocos = ['❄', '❅', '❆', '✦'];
-    const total  = 25;
+    const total  = 40;
 
     for (let i = 0; i < total; i++) {
         const floco = document.createElement('span');
         floco.className   = 'snowflake';
         floco.textContent = flocos[Math.floor(Math.random() * flocos.length)];
         floco.style.left             = Math.random() * 100 + '%';
-        floco.style.fontSize         = (Math.random() * 1.2 + 0.5) + 'rem';
-        floco.style.opacity          = (Math.random() * 0.3 + 0.15).toFixed(2);
-        floco.style.animationDuration = (Math.random() * 8 + 6) + 's';
-        floco.style.animationDelay    = (Math.random() * 10) + 's';
+        floco.style.fontSize         = (Math.random() * 1.3 + 0.6) + 'rem';
+        floco.style.opacity          = (Math.random() * 0.45 + 0.2).toFixed(2);
+        floco.style.animationDuration = (Math.random() * 8 + 5) + 's';
+        floco.style.animationDelay    = (Math.random() * 8) + 's';
         container.appendChild(floco);
     }
 }
